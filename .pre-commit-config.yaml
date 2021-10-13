@@ -1,0 +1,9 @@
+fail_fast: true 
+default_stages: [push]
+repos:
+-   repo: local
+    hooks:
+    -   id: sic
+        name: sic
+        language: python
+        entry: sic-hook

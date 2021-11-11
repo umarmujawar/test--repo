@@ -29,7 +29,7 @@ pipeline {
 
                 """
             )                                    
-          if (exits) {  
+          if (exists) {  
             sh (
                 label: "Scaning protected branch...",
                 script: """

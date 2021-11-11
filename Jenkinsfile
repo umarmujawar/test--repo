@@ -25,14 +25,7 @@ pipeline {
                 ####### Cloning main branch code (Protected branch)
                 cd $PWD/$repo/$ghprbTargetBranch
                 git clone ghprbAuthorRepoGitUrl -b ghprbTargetBranch .
-                def exists = fileExists '$PWD/$repo/$ghprbTargetBranch/.secrets.baseline'                         
-                   if (exists) {
-                    sh (
-                    label: "secret.baseline found...",
-                    script: """
-                    echo "file present"
-                    """
-                    )
+                
                 """
             )
           if (fileExists(".secrets.baseline")) {  

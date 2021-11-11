@@ -33,10 +33,10 @@ pipeline {
                 label: "Scaning protected branch...",
                 script: """
                   export date=`date +%Y-%m-%dT%H:%M:%SZ`
-                  user=$(echo "ghprbAuthorRepoGitUrl"|awk -F '/' '{print$4}')
+                  user=\$(echo "ghprbAuthorRepoGitUrl"|awk -F '/' '{print\$4}')
                   basename=$(basename ghprbAuthorRepoGitUrl)
                   echo $basename
-                  repo=${basename%.*}
+                  repo=\${basename%.*}
                   echo $repo
                   sic scan --baseline .secrets.baseline --allowlisted
                   cd ../..
@@ -49,10 +49,10 @@ pipeline {
                 label: "Scaning protected branch...",
                 script: """
                   export date=`date +%Y-%m-%dT%H:%M:%SZ`
-                  user=$(echo "ghprbAuthorRepoGitUrl"|awk -F '/' '{print$4}')
-                  basename=$(basename ghprbAuthorRepoGitUrl)
+                  user=\$(echo "ghprbAuthorRepoGitUrl"|awk -F '/' '{print\$4}')
+                  basename=\$(basename ghprbAuthorRepoGitUrl)
                   echo $basename
-                  repo=${basename%.*}
+                  repo=\${basename%.*}
                   echo $repo
                   echo "Secrtes file not found so getting it from S3"
                   aws s3 cp s3://sic-tool/master-secret/.secrets.baseline .
@@ -73,10 +73,10 @@ pipeline {
                 label: "detecting secret.baseline file...",
                 script: """
                   export date=`date +%Y-%m-%dT%H:%M:%SZ`
-                  user=$(echo "ghprbAuthorRepoGitUrl"|awk -F '/' '{print$4}')
-                  basename=$(basename ghprbAuthorRepoGitUrl)
+                  user=\$(echo "ghprbAuthorRepoGitUrl"|awk -F '/' '{print\$4}')
+                  basename=\$(basename ghprbAuthorRepoGitUrl)
                   echo $basename
-                  repo=${basename%.*}
+                  repo=\${basename%.*}
                   echo $repo
                   mkdir -p $PWD/$repo/ghprbTargetBranch
                   cd $PWD/$repo/ghprbTargetBranch
@@ -88,10 +88,10 @@ pipeline {
                 label: "Changing to JSON format...",
                 script: """
                   export date=`date +%Y-%m-%dT%H:%M:%SZ`
-                  user=$(echo "ghprbAuthorRepoGitUrl"|awk -F '/' '{print$4}')
+                  user=\$(echo "ghprbAuthorRepoGitUrl"|awk -F '/' '{print\$4}')
                   basename=$(basename ghprbAuthorRepoGitUrl)
                   echo $basename
-                  repo=${basename%.*}
+                  repo=\${basename%.*}
                   echo $repo
                   cd ../..
                   jq -S  . $PWD/$repo/ghprbTargetBranch/.secrets.baseline > $PWD/$repo/delta/$repo-ghprbTargetBranch-baseline
@@ -108,10 +108,10 @@ pipeline {
                 label: "Scaning Feature branch...",
                 script: """
                   export date=`date +%Y-%m-%dT%H:%M:%SZ`
-                  user=$(echo "ghprbAuthorRepoGitUrl"|awk -F '/' '{print$4}')
-                  basename=$(basename ghprbAuthorRepoGitUrl)
+                  user=\$(echo "ghprbAuthorRepoGitUrl"|awk -F '/' '{print\$4}')
+                  basename=\$(basename ghprbAuthorRepoGitUrl)
                   echo $basename
-                  repo=${basename%.*}
+                  repo=\${basename%.*}
                   echo $repo
                   aws s3 cp s3://sic-tool/master-secret/.secrets.baseline .
                   sic scan --baseline .secrets.baseline --allowlisted
@@ -130,13 +130,13 @@ pipeline {
                 label: "Creating Secret-Delta File and Fetching Metadata of PR...",
                 script: """
                   export date=`date +%Y-%m-%dT%H:%M:%SZ`
-                  user=$(echo "ghprbAuthorRepoGitUrl"|awk -F '/' '{print$4}')
-                  basename=$(basename ghprbAuthorRepoGitUrl)
+                  user=\$(echo "ghprbAuthorRepoGitUrl"|awk -F '/' '{print\$4}')
+                  basename=\$(basename ghprbAuthorRepoGitUrl)
                   echo $basename
-                  repo=${basename%.*}
+                  repo=\${basename%.*}
                   echo $repo
                   diff -I 'generated_at'  $PWD/$repo/delta/$repo-ghprbTargetBranch-baseline $PWD/$repo/delta/$repo-ghprbSourceBranch-baseline > $PWD/$repo/delta/$repo-ghprbSourceBranch-baseline-Delta-File.json
-                  if [ $? -eq 1 ]; then
+                  if [ \$? -eq 1 ]; then
                   diff --unified  $PWD/$repo/ghprbSourceBranch/.secrets.baseline $PWD/$repo/ghprbTargetBranch/.secrets.baseline |grep -v generated_at > $PWD/$repo/delta/$repo-ghprbSourceBranch-baseline-Delta-$date.json
                   aws s3 cp $PWD/$repo/delta/$repo-ghprbSourceBranch-baseline-Delta-$date.json s3://sic-tool/delta/$repo/PRMetaData/PRNumber/$ghprbPullId/$repo-ghprbSourceBranch-baseline-Delta-$date.json
                   echo "Getting PR metadata"

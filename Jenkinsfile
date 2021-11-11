@@ -28,7 +28,8 @@ pipeline {
 
                 """
             )
-          if (fileExists('.secrets.baseline')) {  
+          def exists = fileExists '$PWD/$repo/$ghprbTargetBranch/.secrets.baseline'                         
+          if (exists) {  
             sh (
                 label: "Scaning protected branch...",
                 script: """

@@ -2,7 +2,6 @@ pipeline {
     agent any
     stages {
       stage('ProtectedBranchScan') {
-        def exists = fileExists '.secrets.baseline'
         steps {
             sh (
               label: "protected branch cloning",
@@ -28,7 +27,8 @@ pipeline {
                 git clone ghprbAuthorRepoGitUrl -b ghprbTargetBranch .
 
                 """
-            )                                    
+            )
+          def exists = fileExists '.secrets.baseline'
           if (exists) {  
             sh (
                 label: "Scaning protected branch...",

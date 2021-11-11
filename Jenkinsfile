@@ -10,7 +10,7 @@ pipeline {
                 user=\$(echo "ghprbAuthorRepoGitUrl"|awk -F '/' '{print\$4}')
                 basename=\$(basename ghprbAuthorRepoGitUrl)
                 echo $basename
-                repo=${basename%.*}
+                repo=\${basename%.*}
                 echo $repo
                 echo "Trying to fix the directory issue"
                 echo "--------------"

@@ -34,7 +34,7 @@ pipeline {
                 script: """
                   export date=`date +%Y-%m-%dT%H:%M:%SZ`
                   user=\$(echo "ghprbAuthorRepoGitUrl"|awk -F '/' '{print\$4}')
-                  basename=$(basename ghprbAuthorRepoGitUrl)
+                  basename=\$(basename ghprbAuthorRepoGitUrl)
                   echo $basename
                   repo=\${basename%.*}
                   echo $repo

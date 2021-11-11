@@ -2,6 +2,7 @@ pipeline {
     agent any
     stages {
       stage('ProtectedBranchScan') {
+        def exists = fileExists '.secrets.baseline'
         steps {
             sh (
               label: "protected branch cloning",
@@ -28,7 +29,7 @@ pipeline {
 
                 """
             )                                    
-          if (fileExists(".secrets.baseline")) {  
+          if (exits) {  
             sh (
                 label: "Scaning protected branch...",
                 script: """

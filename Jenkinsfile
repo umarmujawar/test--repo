@@ -28,8 +28,7 @@ pipeline {
 
                 """
             )
-          def exists = fileExists '.secrets.baseline'
-          if (exists) {  
+          if (fileExists(".secrets.baseline")) {  
             sh (
                 label: "Scaning protected branch...",
                 script: """

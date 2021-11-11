@@ -28,7 +28,7 @@ pipeline {
 
                 """
             )
-          if (fileExists(".secrets.baseline")) {  
+          if (fileExists('.secrets.baseline')) {  
             sh (
                 label: "Scaning protected branch...",
                 script: """

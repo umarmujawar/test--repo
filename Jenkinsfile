@@ -8,6 +8,7 @@ pipeline {
                      label: "Getting PR number...",
                      script: """
                      echo "$ghprbPullId"
+                     echo "$WORKSPACE"
                      """
                     )
             }

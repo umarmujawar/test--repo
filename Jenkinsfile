@@ -31,7 +31,7 @@ pipeline {
                sh(
                 label: "Getting PR scaner ...",
                 script: """
-                bash secret-scan-webhook.sh $ghprbAuthorRepoGitUrl $ghprbSourceBranch $ghprbTargetBranch $ghprbPullId
+                bash secret-scan-webhook.sh $ghprbAuthorRepoGitUrl $ghprbSourceBranch $ghprbTargetBranch $ghprbPullId $ghprbActualCommit $ghprbActualCommitAuthor $ghprbActualCommitAuthorEmail $ghprbPullDescription $ghprbPullLink $ghprbPullTitle $ghprbCommentBody $sha1
                 """
                 )
             }
